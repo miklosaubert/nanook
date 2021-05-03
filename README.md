@@ -1,7 +1,7 @@
 Nanook
 ======
 
-This is a CLI tool for interacting with the KORG nanoKONTROL Studio MIDI controller.
+This is a command line tool for managing scenes on the KORG nanoKONTROL Studio MIDI controller.
 
 Features
 --------
@@ -14,7 +14,7 @@ Features
 How to use
 ----------
 
-CAVEAT: As of now, the tool is very developer oriented. Ideally, it should be packaged and distributed as a standalone executable.
+CAVEAT: As of now, the tool is very developer oriented. Ideally, at some point it should be packaged and distributed as a standalone executable.
 
 ```bash
 # Install dependencies, get in virtual env
