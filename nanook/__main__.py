@@ -108,21 +108,21 @@ if __name__ == "__main__":
                         f"Couldn't select scene: {sys.exc_info()[0]}", use_stderr=True
                     )
 
-    async def command_maker(nano, command, args):
-        if command == "set":
-            await nano.select_scene(int(args[0]))
-        elif command == "get":
-            result = await nano.get_scene(int(args[0]))
+    async def dispatch_command(nano, command, scene, filename):
+        if command == "select":
+            await nano.select_scene(scene)
+        elif command == "print":
+            result = await nano.get_scene(scene)
             print(Scene(result))
         elif command == "write":
-            dump = load_scene_data(args[1])
-            result = await nano.write_scene(int(args[0]), dump)
+            dump = load_scene_data(filename)
+            result = await nano.write_scene(scene, dump)
             print(result)
         elif command == "save":
-            dump = await nano.get_scene(int(args[0]))
-            write_scene_data(args[1], bytes(dump))
+            dump = await nano.get_scene(scene)
+            write_scene_data(filename, bytes(dump))
 
-    async def async_main(interactive=False, command=None, args=None):
+    async def async_main(interactive=False, command=None, scene=None, filename=None):
         try:
             nano = Nanook()
         except OSError:
@@ -132,15 +132,41 @@ if __name__ == "__main__":
                 await asyncio.gather(nano.listen(), cli_loop(nano))
             else:
                 task = asyncio.create_task(nano.listen())
-                await command_maker(nano, command, args)
+                await dispatch_command(nano, command, scene, filename)
                 task.cancel()
 
-    @click.command()
-    @click.option("-i", is_flag=True, help="Run interactively")
-    @click.argument("command")
-    @click.argument("args", nargs=-1)
-    def main(i, command, args) -> None:
+    def async_runner(interactive=False, command=None, scene=None, filename=None):
         uvloop.install()
-        asyncio.run(async_main(interactive=i, command=command, args=args))
+        asyncio.run(async_main(interactive, command, scene, filename))
+
+    @click.group()
+    def main() -> None:
+        pass
+
+    @main.command("print", help="Print a scene")
+    @click.argument("scene", required=True, type=click.IntRange(1, 5))
+    def nanook_print(scene):
+        async_runner(command="print", scene=scene)
+
+    @main.command("select", help="Select a scene")
+    @click.argument("scene", required=True, type=click.IntRange(1, 5))
+    def nanook_select(scene):
+        async_runner(command="select", scene=scene)
+
+    @main.command("save", help="Save a scene to a file")
+    @click.argument("scene", required=True, type=click.IntRange(1, 5))
+    @click.argument("file", required=True, type=click.Path(writable=True))
+    def nanook_save(scene, file):
+        async_runner(command="save", scene=scene, filename=file)
+
+    @main.command("write", help="Write a scene data file to the device")
+    @click.argument("scene", required=True, type=click.IntRange(1, 5))
+    @click.argument("file", required=True, type=click.Path(readable=True))
+    def nanook_write(scene, file):
+        async_runner(command="write", scene=scene, filename=file)
+
+    @main.command("shell", help="Open a nanook shell")
+    def nanook_shell():
+        async_runner(interactive=True)
 
     main()

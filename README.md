@@ -22,7 +22,7 @@ python -m nanook --help
 python -m nanook select SCENE_NUMBER
 
 # pretty-print the scene data
-python -m nanook get SCENE_NUMBER
+python -m nanook print SCENE_NUMBER
 
 # load and write a scene data file to a given scene
 python -m nanook write SCENE_NUMBER NKTRL_ST_DATA_FILE
