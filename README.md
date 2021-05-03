@@ -1,18 +1,14 @@
-Nanook
-======
+# Nanook
 
 This is a command line tool for managing scenes on the KORG nanoKONTROL Studio MIDI controller.
 
-Features
---------
+## Features
 
 - select a scene, pretty-print scene data
-- write scene data files (*.nktrl_st_data) to and from the device
+- write scene data files (\*.nktrl_st_data) to and from the device
 - written in Python using Click, Mido and asyncio
 
-
-How to use
-----------
+## How to use
 
 CAVEAT: As of now, the tool is very developer oriented. Ideally, at some point it should be packaged and distributed as a standalone executable.
 
@@ -23,7 +19,7 @@ poetry shell
 python -m nanook --help
 
 # select a scene
-python -m nanook set SCENE_NUMBER  
+python -m nanook select SCENE_NUMBER
 
 # pretty-print the scene data
 python -m nanook get SCENE_NUMBER
@@ -35,7 +31,6 @@ python -m nanook write SCENE_NUMBER NKTRL_ST_DATA_FILE
 python -m nanook save SCENE_NUMBER FILENAME
 ```
 
-Bugs & missing stuff
---------------------
+## Bugs & missing stuff
 
 Yes.

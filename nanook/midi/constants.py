@@ -10,7 +10,7 @@ ACK = (1, 0, 0, 35)
 NAK = (1, 0, 0, 38)
 
 CMD_UNKNOWN_1 = (1, 0, 0, 18)
-CMD_SET_SCENE = lambda scene: (2, 0, 0, 20, scene - 1)
+CMD_SELECT_SCENE = lambda scene: (2, 0, 0, 20, scene - 1)
 CMD_GET_CURRENT_SCENE_DATA = (1, 0, 0, 16)
 CMD_SCENE_DATA_TRANSFER = (1, 5, 0, 64)
 CMD_STORE_EDIT_BUFFER_TO_SCENE = lambda scene: (2, 0, 0, 17, scene - 1)

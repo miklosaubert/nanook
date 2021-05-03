@@ -60,14 +60,14 @@ class Nanook:
         return await self.__send_sysex(SYSEX_HEADER + command)
 
     async def get_scene(self, scene_number):
-        await self.set_scene(scene_number)
+        await self.select_scene(scene_number)
         midi = await self._send_command(CMD_GET_CURRENT_SCENE_DATA)
         dump = scene_dump_from_midi(midi[4:])
         return dump
 
-    async def set_scene(self, scene_number):
+    async def select_scene(self, scene_number):
         await self._send_command(CMD_UNKNOWN_1)
-        return await self._send_command(CMD_SET_SCENE(scene_number))
+        return await self._send_command(CMD_SELECT_SCENE(scene_number))
 
     async def write_scene(self, scene_number, scene_dump):
         await self._send_command(CMD_UNKNOWN_1)
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         )
         while True:
             cmd = await ainput("nanook> ")
-            if cmd == "d":
+            if cmd == "p":
                 result = await nano.get_scene(1)
                 await aprint(result)
             if cmd.startswith("s "):
@@ -101,16 +101,16 @@ if __name__ == "__main__":
                     scene_number = int(cmd.split(" ")[1])
                     if scene_number not in [1, 2, 3, 4, 5]:
                         raise Exception("Scene number must be between 1 and 5")
-                    await nano.set_scene(scene_number)
-                    await aprint(f"Scene {scene_number} set.")
+                    await nano.select_scene(scene_number)
+                    await aprint(f"Scene {scene_number} selected.")
                 except:
                     await aprint(
-                        f"Couldn't set scene: {sys.exc_info()[0]}", use_stderr=True
+                        f"Couldn't select scene: {sys.exc_info()[0]}", use_stderr=True
                     )
 
     async def command_maker(nano, command, args):
         if command == "set":
-            await nano.set_scene(int(args[0]))
+            await nano.select_scene(int(args[0]))
         elif command == "get":
             result = await nano.get_scene(int(args[0]))
             print(Scene(result))
