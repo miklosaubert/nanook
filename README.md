@@ -16,19 +16,19 @@ CAVEAT: As of now, the tool is very developer oriented. Ideally, at some point i
 # Install dependencies, get in virtual env
 poetry install
 poetry shell
-python -m nanook --help
+nanook --help
 
 # select a scene
-python -m nanook select SCENE_NUMBER
+nanook select SCENE_NUMBER
 
 # pretty-print the scene data
-python -m nanook print SCENE_NUMBER
+nanook print SCENE_NUMBER
 
 # load and write a scene data file to a given scene
-python -m nanook write SCENE_NUMBER NKTRL_ST_DATA_FILE
+nanook write SCENE_NUMBER NKTRL_ST_DATA_FILE
 
 # save a given scene to a file
-python -m nanook save SCENE_NUMBER FILENAME
+nanook save SCENE_NUMBER FILENAME
 ```
 
 ## Bugs & missing stuff
