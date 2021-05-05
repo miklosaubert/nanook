@@ -8,14 +8,15 @@ This is a command line tool for managing scenes on the KORG nanoKONTROL Studio M
 - write scene data files (\*.nktrl_st_data) to and from the device
 - written in Python using Click, Mido and asyncio
 
-## How to use
-
-CAVEAT: As of now, the tool is very developer oriented. Ideally, at some point it should be packaged and distributed as a standalone executable.
+## Installation
 
 ```bash
-# Install dependencies, get in virtual env
-poetry install
-poetry shell
+pip install nanook
+```
+
+## Usage
+
+```bash
 nanook --help
 
 # select a scene
@@ -29,6 +30,19 @@ nanook write SCENE_NUMBER NKTRL_ST_DATA_FILE
 
 # save a given scene to a file
 nanook save SCENE_NUMBER FILENAME
+```
+
+
+## Development
+
+Clone this repository and use [poetry](https://python-poetry.org/docs/) to install dependencies.
+
+```bash
+# Install dependencies
+poetry install
+
+# Get in virtual env. From this shell, you will be running your local copy of nanook
+poetry shell
 ```
 
 ## Bugs & missing stuff
