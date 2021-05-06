@@ -4,7 +4,12 @@ import click
 import uvloop
 from aioconsole import ainput, aprint
 from nanook import Controller, Scene
-from nanook.nktrl_st_file import load_scene_data, write_scene_data
+from nanook.nktrl_st_file import (
+    load_scene_data,
+    load_scene_set,
+    save_scene_data,
+    save_scene_set,
+)
 
 
 async def cli_loop(controller):
@@ -35,13 +40,23 @@ async def dispatch_command(controller, command, scene, filename):
     elif command == "print":
         result = await controller.get_scene(scene)
         print(Scene(result))
+    elif command == "save":
+        dump = await controller.get_scene(scene)
+        save_scene_data(filename, bytes(dump))
+    elif command == "save-set":
+        dumps = []
+        for scene in range(1, 6):
+            dumps.append(bytes(await controller.get_scene(scene)))
+        save_scene_set(filename, dumps)
     elif command == "write":
         dump = load_scene_data(filename)
         result = await controller.write_scene(scene, dump)
         print(result)
-    elif command == "save":
-        dump = await controller.get_scene(scene)
-        write_scene_data(filename, bytes(dump))
+    elif command == "write-set":
+        dumps = load_scene_set(filename)
+        for scene in range(1, 6):
+            result = await controller.write_scene(scene, dumps[scene - 1])
+            print(result)
 
 
 async def async_main(interactive=False, command=None, scene=None, filename=None):
@@ -87,11 +102,23 @@ def nanook_save(scene, file):
     async_runner(command="save", scene=scene, filename=file)
 
 
+@main.command("save-set", help="Save the complete scene set to a file")
+@click.argument("file", required=True, type=click.Path(writable=True))
+def nanook_save_set(file):
+    async_runner(command="save-set", filename=file)
+
+
 @main.command("write", help="Write a scene data file to the device")
 @click.argument("scene", required=True, type=click.IntRange(1, 5))
 @click.argument("file", required=True, type=click.Path(readable=True))
 def nanook_write(scene, file):
     async_runner(command="write", scene=scene, filename=file)
+
+
+@main.command("write-set", help="Write a complete scene set to the device")
+@click.argument("file", required=True, type=click.Path(readable=True))
+def nanook_write_set(file):
+    async_runner(command="write-set", filename=file)
 
 
 @main.command("shell", help="Open a nanook shell")

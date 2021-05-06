@@ -30,6 +30,12 @@ nanook write SCENE_NUMBER NKTRL_ST_DATA_FILE
 
 # save a given scene to a file
 nanook save SCENE_NUMBER FILENAME
+
+# load and write a scene set file to the device
+nanook write-set NKTRL_ST_SET_FILE
+
+# save the current scene set to a file
+nanook save-set FILENAME
 ```
 
 

@@ -75,7 +75,7 @@ def load_scene_set(filename):
         return scene_set
 
 
-def write_scene_set(filename, scene_set):
+def save_scene_set(filename, scene_set):
     with open(filename, "wb") as file:
         file.write(SCENE_SET_FILE_HEADER)
         for i in range(len(scene_set)):
@@ -92,7 +92,7 @@ def load_scene_data(filename):
         return scene_data
 
 
-def write_scene_data(filename, data):
+def save_scene_data(filename, data):
     with open(filename, "wb") as file:
         file.write(SCENE_DATA_FILE_HEADER)
         file.write(data)
