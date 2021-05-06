@@ -1,4 +1,4 @@
-from .constants import *
+import nanook.midi.constants as MIDI
 
 
 def has_header(sysex_data, header):
@@ -7,10 +7,10 @@ def has_header(sysex_data, header):
 
 
 def extract_payload(sysex_data):
-    if has_header(sysex_data, INQUIRY_RESPONSE_HEADER):
-        return sysex_data[INQUIRY_RESPONSE_HEADER_LENGTH:]
-    if has_header(sysex_data, SYSEX_HEADER):
-        return sysex_data[SYSEX_HEADER_LENGTH:]
+    if has_header(sysex_data, MIDI.INQUIRY_RESPONSE_HEADER):
+        return sysex_data[MIDI.INQUIRY_RESPONSE_HEADER_LENGTH :]
+    if has_header(sysex_data, MIDI.SYSEX_HEADER):
+        return sysex_data[MIDI.SYSEX_HEADER_LENGTH :]
 
 
 def midi_from_scene_dump(dump):

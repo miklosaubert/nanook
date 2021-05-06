@@ -1,9 +1,10 @@
 import asyncio
+import sys
 import click
 import uvloop
 from aioconsole import ainput, aprint
 from nanook import Controller, Scene
-from nanook.nktrl_st_file import *
+from nanook.nktrl_st_file import load_scene_data, write_scene_data
 
 
 async def cli_loop(controller):
@@ -22,7 +23,7 @@ async def cli_loop(controller):
                     raise Exception("Scene number must be between 1 and 5")
                 await controller.select_scene(scene_number)
                 await aprint(f"Scene {scene_number} selected.")
-            except:
+            except Exception:
                 await aprint(
                     f"Couldn't select scene: {sys.exc_info()[0]}", use_stderr=True
                 )
