@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nanook"
-version = "0.1.0"
+version = "0.1.1"
 description = "Command line tool for managing scenes on the KORG nanoKONTROL Studio MIDI controller."
 authors = ["Miklos Aubert <miklos.aubert@gmail.com>"]
 license = "Unlicense"
