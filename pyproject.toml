@@ -4,6 +4,14 @@ version = "0.1.0"
 description = "Command line tool for managing scenes on the KORG nanoKONTROL Studio MIDI controller."
 authors = ["Miklos Aubert <miklos.aubert@gmail.com>"]
 license = "Unlicense"
+repository = "https://github.com/miklosaubert/nanook"
+homepage = "https://github.com/miklosaubert/nanook"
+keywords = ["MIDI", "controller", "CLI", "manager"]
+classifiers = [
+    "License :: OSI Approved :: The Unlicense (Unlicense)",
+    "Topic :: Multimedia :: Sound/Audio :: MIDI",
+    "Development Status :: 3 - Alpha"
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
